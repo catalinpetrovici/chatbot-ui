@@ -90,57 +90,57 @@ export default async function Login({
     return process.env[name]
   }
 
-  const signUp = async (formData: FormData) => {
-    "use server"
+  // const signUp = async (formData: FormData) => {
+  //   "use server"
 
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
+  //   const email = formData.get("email") as string
+  //   const password = formData.get("password") as string
 
-    const emailDomainWhitelistPatternsString = await getEnvVarOrEdgeConfigValue(
-      "EMAIL_DOMAIN_WHITELIST"
-    )
-    const emailDomainWhitelist = emailDomainWhitelistPatternsString?.trim()
-      ? emailDomainWhitelistPatternsString?.split(",")
-      : []
-    const emailWhitelistPatternsString =
-      await getEnvVarOrEdgeConfigValue("EMAIL_WHITELIST")
-    const emailWhitelist = emailWhitelistPatternsString?.trim()
-      ? emailWhitelistPatternsString?.split(",")
-      : []
+  //   const emailDomainWhitelistPatternsString = await getEnvVarOrEdgeConfigValue(
+  //     "EMAIL_DOMAIN_WHITELIST"
+  //   )
+  //   const emailDomainWhitelist = emailDomainWhitelistPatternsString?.trim()
+  //     ? emailDomainWhitelistPatternsString?.split(",")
+  //     : []
+  //   const emailWhitelistPatternsString =
+  //     await getEnvVarOrEdgeConfigValue("EMAIL_WHITELIST")
+  //   const emailWhitelist = emailWhitelistPatternsString?.trim()
+  //     ? emailWhitelistPatternsString?.split(",")
+  //     : []
 
-    // If there are whitelist patterns, check if the email is allowed to sign up
-    if (emailDomainWhitelist.length > 0 || emailWhitelist.length > 0) {
-      const domainMatch = emailDomainWhitelist?.includes(email.split("@")[1])
-      const emailMatch = emailWhitelist?.includes(email)
-      if (!domainMatch && !emailMatch) {
-        return redirect(
-          `/login?message=Email ${email} is not allowed to sign up.`
-        )
-      }
-    }
+  //   // If there are whitelist patterns, check if the email is allowed to sign up
+  //   if (emailDomainWhitelist.length > 0 || emailWhitelist.length > 0) {
+  //     const domainMatch = emailDomainWhitelist?.includes(email.split("@")[1])
+  //     const emailMatch = emailWhitelist?.includes(email)
+  //     if (!domainMatch && !emailMatch) {
+  //       return redirect(
+  //         `/login?message=Email ${email} is not allowed to sign up.`
+  //       )
+  //     }
+  //   }
 
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+  //   const cookieStore = cookies()
+  //   const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
-        // emailRedirectTo: `${origin}/auth/callback`
-      }
-    })
+  //   const { error } = await supabase.auth.signUp({
+  //     email,
+  //     password,
+  //     options: {
+  //       // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
+  //       // emailRedirectTo: `${origin}/auth/callback`
+  //     }
+  //   })
 
-    if (error) {
-      console.error(error)
-      return redirect(`/login?message=${error.message}`)
-    }
+  //   if (error) {
+  //     console.error(error)
+  //     return redirect(`/login?message=${error.message}`)
+  //   }
 
-    return redirect("/setup")
+  //   return redirect("/setup")
 
-    // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
-    // return redirect("/login?message=Check email to continue sign in process")
-  }
+  //   // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
+  //   // return redirect("/login?message=Check email to continue sign in process")
+  // }
 
   const handleResetPassword = async (formData: FormData) => {
     "use server"
@@ -193,12 +193,12 @@ export default async function Login({
           Login
         </SubmitButton>
 
-        <SubmitButton
+        {/* <SubmitButton
           formAction={signUp}
           className="border-foreground/20 mb-2 rounded-md border px-4 py-2"
         >
           Sign Up
-        </SubmitButton>
+        </SubmitButton> */}
 
         <div className="text-muted-foreground mt-1 flex justify-center text-sm">
           <span className="mr-1">Forgot your password?</span>
