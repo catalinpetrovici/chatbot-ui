@@ -219,7 +219,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         <div className="flex w-full items-center gap-2 pr-4">
           <TextareaAutosize
             textareaRef={chatInputRef}
-            className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-4 py-2 pr-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex max-h-[72px] w-full resize-none rounded-md border-none bg-transparent px-4 py-2 pr-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             placeholder={t(
               `Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`
             )}

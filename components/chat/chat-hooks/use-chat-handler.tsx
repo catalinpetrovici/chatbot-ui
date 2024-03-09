@@ -71,11 +71,11 @@ export const useChatHandler = () => {
 
   const chatInputRef = useRef<HTMLTextAreaElement>(null)
 
-  useEffect(() => {
-    if (!isPromptPickerOpen || !isFilePickerOpen || !isToolPickerOpen) {
-      chatInputRef.current?.focus()
-    }
-  }, [isPromptPickerOpen, isFilePickerOpen, isToolPickerOpen])
+  // useEffect(() => {
+  //   if (!isPromptPickerOpen || !isFilePickerOpen || !isToolPickerOpen) {
+  //     chatInputRef.current?.focus()
+  //   }
+  // }, [isPromptPickerOpen, isFilePickerOpen, isToolPickerOpen])
 
   const handleNewChat = async () => {
     if (!selectedWorkspace) return
@@ -179,7 +179,7 @@ export const useChatHandler = () => {
   }
 
   const handleFocusChatInput = () => {
-    chatInputRef.current?.focus()
+    if (global?.window?.screen.width > 900) chatInputRef.current?.focus()
   }
 
   const handleStopMessage = () => {
