@@ -1,5 +1,6 @@
 "use client"
 
+import { ChatbotUIContext } from "@/context/context"
 import { Sidebar } from "@/components/sidebar/sidebar"
 import { SidebarSwitcher } from "@/components/sidebar/sidebar-switcher"
 import { Button } from "@/components/ui/button"
@@ -9,9 +10,10 @@ import { cn } from "@/lib/utils"
 import { ContentType } from "@/types"
 import { IconChevronCompactRight } from "@tabler/icons-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { useSelectFileHandler } from "../chat/chat-hooks/use-select-file-handler"
 import { CommandK } from "../utility/command-k"
+import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
 
 export const SIDEBAR_WIDTH = 350
 
@@ -20,7 +22,17 @@ interface DashboardProps {
 }
 
 export const Dashboard: FC<DashboardProps> = ({ children }) => {
-  useHotkey("s", () => setShowSidebar(prevState => !prevState))
+  const { showSidebar, setShowSidebar } = useContext(ChatbotUIContext)
+
+  const handleToggleSidebar = () => {
+    setShowSidebar(prevState => {
+      window.localStorage.setItem("showSidebar", String(!prevState))
+
+      return !prevState
+    })
+  }
+
+  useHotkey("s", handleToggleSidebar)
 
   const pathname = usePathname()
   const router = useRouter()
@@ -31,9 +43,6 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
 
   const [contentType, setContentType] = useState<ContentType>(
     tabValue as ContentType
-  )
-  const [showSidebar, setShowSidebar] = useState(
-    localStorage.getItem("showSidebar") === "true"
   )
   const [isDragging, setIsDragging] = useState(false)
 
@@ -60,11 +69,6 @@ export const Dashboard: FC<DashboardProps> = ({ children }) => {
 
   const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault()
-  }
-
-  const handleToggleSidebar = () => {
-    setShowSidebar(prevState => !prevState)
-    localStorage.setItem("showSidebar", String(!showSidebar))
   }
 
   return (

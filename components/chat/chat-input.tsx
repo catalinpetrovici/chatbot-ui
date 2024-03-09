@@ -189,7 +189,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           ))}
 
         {selectedAssistant && (
-          <div className="border-primary mx-auto flex w-fit items-center space-x-2 rounded-lg border p-1.5">
+          <div className=" mx-auto flex w-fit items-center space-x-2">
             {selectedAssistant.image_path && (
               <Image
                 className="rounded"
@@ -216,63 +216,66 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           <ChatCommandInput />
         </div>
 
-        <>
-          <IconCirclePlus
-            className="absolute bottom-[12px] left-3 cursor-pointer p-1 hover:opacity-50"
-            size={32}
-            onClick={() => fileInputRef.current?.click()}
+        <div className="flex w-full items-center gap-2 pr-4">
+          <TextareaAutosize
+            textareaRef={chatInputRef}
+            className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-4 py-2 pr-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder={t(
+              `Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`
+            )}
+            onValueChange={handleInputChange}
+            value={userInput}
+            minRows={1}
+            maxRows={18}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
+            onCompositionStart={() => setIsTyping(true)}
+            onCompositionEnd={() => setIsTyping(false)}
           />
 
-          {/* Hidden input to select files from device */}
-          <Input
-            ref={fileInputRef}
-            className="hidden"
-            type="file"
-            onChange={e => {
-              if (!e.target.files) return
-              handleSelectDeviceFile(e.target.files[0])
-            }}
-            accept={filesToAccept}
-          />
-        </>
+          <div className="flex flex-col justify-center gap-2 py-2 sm:flex-row">
+            <div className="">
+              <IconCirclePlus
+                className="cursor-pointer p-1 hover:opacity-50"
+                size={32}
+                onClick={() => fileInputRef.current?.click()}
+              />
+              {/* Hidden input to select files from device */}
+              <Input
+                ref={fileInputRef}
+                className="hidden"
+                type="file"
+                onChange={e => {
+                  if (!e.target.files) return
+                  handleSelectDeviceFile(e.target.files[0])
+                }}
+                accept={filesToAccept}
+              />
+            </div>
 
-        <TextareaAutosize
-          textareaRef={chatInputRef}
-          className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-          placeholder={t(
-            `Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`
-          )}
-          onValueChange={handleInputChange}
-          value={userInput}
-          minRows={1}
-          maxRows={18}
-          onKeyDown={handleKeyDown}
-          onPaste={handlePaste}
-          onCompositionStart={() => setIsTyping(true)}
-          onCompositionEnd={() => setIsTyping(false)}
-        />
+            <div className="cursor-pointer hover:opacity-50 ">
+              {isGenerating ? (
+                <IconPlayerStopFilled
+                  className="hover:bg-background animate-pulse rounded bg-transparent p-1"
+                  onClick={handleStopMessage}
+                  size={30}
+                />
+              ) : (
+                <IconSend
+                  className={cn(
+                    "bg-primary text-secondary rounded p-1",
+                    !userInput && "cursor-not-allowed opacity-50"
+                  )}
+                  onClick={() => {
+                    if (!userInput) return
 
-        <div className="absolute bottom-[14px] right-3 cursor-pointer hover:opacity-50">
-          {isGenerating ? (
-            <IconPlayerStopFilled
-              className="hover:bg-background animate-pulse rounded bg-transparent p-1"
-              onClick={handleStopMessage}
-              size={30}
-            />
-          ) : (
-            <IconSend
-              className={cn(
-                "bg-primary text-secondary rounded p-1",
-                !userInput && "cursor-not-allowed opacity-50"
+                    handleSendMessage(userInput, chatMessages, false)
+                  }}
+                  size={30}
+                />
               )}
-              onClick={() => {
-                if (!userInput) return
-
-                handleSendMessage(userInput, chatMessages, false)
-              }}
-              size={30}
-            />
-          )}
+            </div>
+          </div>
         </div>
       </div>
     </>

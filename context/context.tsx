@@ -13,6 +13,10 @@ import { VALID_ENV_KEYS } from "@/types/valid-keys"
 import { Dispatch, SetStateAction, createContext } from "react"
 
 interface ChatbotUIContext {
+  // SIDEBAR
+  showSidebar: boolean
+  setShowSidebar: Dispatch<SetStateAction<boolean>>
+
   // PROFILE STORE
   profile: Tables<"profiles"> | null
   setProfile: Dispatch<SetStateAction<Tables<"profiles"> | null>>
@@ -139,6 +143,10 @@ interface ChatbotUIContext {
 }
 
 export const ChatbotUIContext = createContext<ChatbotUIContext>({
+  // SIDEBAR
+  showSidebar: false,
+  setShowSidebar: () => {},
+
   // PROFILE STORE
   profile: null,
   setProfile: () => {},

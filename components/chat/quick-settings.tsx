@@ -191,7 +191,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
       }}
     >
       <DropdownMenuTrigger asChild className="max-w-[400px]" disabled={loading}>
-        <Button variant="ghost" className="flex space-x-3 text-lg">
+        <Button variant="ghost" className="flex gap-3 text-lg">
           {selectedPreset && (
             <ModelIcon
               provider={modelDetails?.provider || "custom"}
@@ -220,7 +220,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
             <div className="animate-pulse">Loading assistant...</div>
           ) : (
             <>
-              <div className="overflow-hidden text-ellipsis">
+              <div className="hidden overflow-hidden text-ellipsis sm:block">
                 {isModified &&
                   (selectedPreset || selectedAssistant) &&
                   "Modified "}
@@ -230,16 +230,13 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
                   t("Quick Settings")}
               </div>
 
-              <IconChevronDown className="ml-1" />
+              <IconChevronDown />
             </>
           )}
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        className="min-w-[300px] max-w-[500px] space-y-4"
-        align="start"
-      >
+      <DropdownMenuContent className="max-w-[500px] space-y-4" align="start">
         {presets.length === 0 && assistants.length === 0 ? (
           <div className="p-8 text-center">No items found.</div>
         ) : (

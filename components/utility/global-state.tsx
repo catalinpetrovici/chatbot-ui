@@ -101,6 +101,11 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   const [hashtagCommand, setHashtagCommand] = useState("")
   const [isToolPickerOpen, setIsToolPickerOpen] = useState(false)
   const [toolCommand, setToolCommand] = useState("")
+  const [showSidebar, setShowSidebar] = useState(
+    global?.window?.screen.width < 900
+      ? false
+      : global?.window?.localStorage.getItem("showSidebar") === "true"
+  )
   const [focusPrompt, setFocusPrompt] = useState(false)
   const [focusFile, setFocusFile] = useState(false)
   const [focusTool, setFocusTool] = useState(false)
@@ -200,6 +205,10 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
   return (
     <ChatbotUIContext.Provider
       value={{
+        // SIDEBAR
+        showSidebar,
+        setShowSidebar,
+
         // PROFILE STORE
         profile,
         setProfile,

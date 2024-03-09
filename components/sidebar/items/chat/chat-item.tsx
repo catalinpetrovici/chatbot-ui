@@ -18,6 +18,7 @@ interface ChatItemProps {
 
 export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
   const {
+    setShowSidebar,
     selectedWorkspace,
     selectedChat,
     availableLocalModels,
@@ -31,8 +32,17 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
 
   const itemRef = useRef<HTMLDivElement>(null)
 
+  const handleToggleSidebar = () => {
+    setShowSidebar(prevState => {
+      window.localStorage.setItem("showSidebar", String(!prevState))
+
+      return !prevState
+    })
+  }
+
   const handleClick = () => {
     if (!selectedWorkspace) return
+    handleToggleSidebar()
     return router.push(`/${selectedWorkspace.id}/chat/${chat.id}`)
   }
 

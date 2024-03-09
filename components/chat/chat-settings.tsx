@@ -72,7 +72,7 @@ export const ChatSettings: FC<ChatSettingsProps> = ({}) => {
           className="flex items-center space-x-2"
           variant="ghost"
         >
-          <div className="text-lg">
+          <div className="hidden text-lg sm:block ">
             {fullModel?.modelName || chatSettings.model}
           </div>
 

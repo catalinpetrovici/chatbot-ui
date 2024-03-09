@@ -18,7 +18,7 @@ export default function ChatPage() {
     handleFocusChatInput()
   })
 
-  const { chatMessages } = useContext(ChatbotUIContext)
+  const { chatMessages, selectedAssistant } = useContext(ChatbotUIContext)
 
   const { handleNewChat, handleFocusChatInput } = useChatHandler()
 
@@ -27,26 +27,24 @@ export default function ChatPage() {
   return (
     <>
       {chatMessages.length === 0 ? (
-        <div className="relative flex h-full flex-col items-center justify-center">
-          <div className="top-50% left-50% -translate-x-50% -translate-y-50% absolute mb-20">
-            <Brand theme={theme === "dark" ? "dark" : "light"} />
+        <div className="relative flex h-full flex-col items-center justify-center px-4 py-2">
+          <div className="flex w-full justify-between">
+            <div>
+              <QuickSettings />
+            </div>
+            <div>
+              <ChatSettings />
+            </div>
+          </div>
+          <div className="flex h-full min-w-[200px] max-w-[600px] items-center justify-center text-gray-400">
+            <div>{selectedAssistant?.prompt}</div>
           </div>
 
-          <div className="absolute left-2 top-2">
-            <QuickSettings />
-          </div>
-
-          <div className="absolute right-2 top-2">
-            <ChatSettings />
-          </div>
-
-          <div className="flex grow flex-col items-center justify-center" />
-
-          <div className="w-[300px] pb-8 sm:w-[400px] md:w-[500px] lg:w-[660px] xl:w-[800px]">
+          <div className="w-full max-w-[800px] pb-4">
             <ChatInput />
           </div>
 
-          <div className="absolute bottom-2 right-2 hidden md:block lg:bottom-4 lg:right-4">
+          <div className="absolute bottom-4 right-4 hidden md:block">
             <ChatHelp />
           </div>
         </div>
