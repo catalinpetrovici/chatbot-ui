@@ -1,3 +1,6 @@
+const path = require("path")
+const createJiti = require("jiti")
+
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true"
 })
@@ -5,6 +8,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const withPWA = require("next-pwa")({
   dest: "public"
 })
+
+const fileURL = `file://${path.resolve(__filename)}`
+const jiti = createJiti(fileURL)
+jiti("./app/env/server.ts")
 
 module.exports = withBundleAnalyzer(
   withPWA({
