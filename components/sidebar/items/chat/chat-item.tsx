@@ -42,7 +42,9 @@ export const ChatItem: FC<ChatItemProps> = ({ chat }) => {
 
   const handleClick = () => {
     if (!selectedWorkspace) return
-    handleToggleSidebar()
+
+    if (global?.window?.screen.width < 900) handleToggleSidebar()
+
     return router.push(`/${selectedWorkspace.id}/chat/${chat.id}`)
   }
 
