@@ -1,0 +1,21 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.chatgpt.rule=Host(`chatgpt.ctechnest.com`)"
+      - "traefik.http.routers.chatgpt.entrypoints=websecure"
+      - "traefik.http.services.chatgpt.loadbalancer.server.port=3000"
+      - "traefik.http.routers.chatgpt.tls=true"
+#      - "traefik.http.routers.chatgpt.middlewares=authentik@file"
+
+networks:
+  web:
+    external: true
